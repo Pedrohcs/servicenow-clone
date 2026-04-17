@@ -29,7 +29,7 @@ def clonar_update_set(conteudo_xml, substituicoes):
     print("\nMapeando sys_ids para clonagem...")
     padrao_sys_id = re.compile(r'[a-f0-9]{32}')
     sys_ids_encontrados = set(padrao_sys_id.findall(conteudo_xml))
-    
+
     print(f"Encontrados {len(sys_ids_encontrados)} sys_ids únicos para mapear.")
     for id_antigo in sys_ids_encontrados:
         # Garante que não vamos substituir algo que já está no mapa de nomes/escopos
@@ -49,7 +49,7 @@ def clonar_update_set(conteudo_xml, substituicoes):
     # 5. Executar a substituição em uma única passagem
     print("\nExecutando substituições no conteúdo XML...")
     conteudo_clonado = regex_substituicao.sub(get_replacement, conteudo_xml)
-    
+
     return conteudo_clonado
 
 
@@ -62,7 +62,7 @@ def main():
     )
     parser.add_argument("arquivo_entrada", type=Path, help="Caminho para o arquivo XML original.")
     parser.add_argument("arquivo_saida", type=Path, help="Caminho para salvar o novo arquivo XML atualizado.")
-    
+
     parser.add_argument(
         '--replace',
         nargs=2,
@@ -86,13 +86,14 @@ def main():
         print(f"Salvando o arquivo atualizado em: {args.arquivo_saida}")
         with open(args.arquivo_saida, 'w', encoding='utf-8') as f_out:
             f_out.write(xml_clonado)
-        
+
         print("\nProcesso de clonagem concluído com sucesso!")
 
     except FileNotFoundError:
         print(f"Erro: O arquivo de entrada '{args.arquivo_entrada}' não foi encontrado.")
     except Exception as e:
         print(f"Ocorreu um erro inesperado: {e}")
+
 
 if __name__ == "__main__":
     main()
